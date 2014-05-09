@@ -62,9 +62,11 @@ nautilus-dropbox
 nautilus-open-terminal
 ncmpcpp
 pianobar
+pidgin
 pyrenamer
 redshift
 shotwell
+skype
 sparkleshare
 truecrypt
 xchat
@@ -78,11 +80,14 @@ case $REPLY in
 [Yy]* ) 
     echo 'Requires root privileges:'
     # Feel free to change to whatever suits your preferences.
-    sudo apt-get install -y --no-install-recommends cheese darktable easytag gnome-tweak-tool gpick grsync nautilus-dropbox nautilus-open-terminal pyrenamer sparkleshare xchat vlc ncmpcpp mutt canto redshift weechat irssi pianobar filezilla feh shotwell libreoffice lynx wireshark evince
+    sudo apt-get install -y --no-install-recommends cheese darktable easytag gnome-tweak-tool gpick grsync nautilus-dropbox nautilus-open-terminal pyrenamer sparkleshare xchat vlc ncmpcpp mutt canto redshift weechat irssi pianobar filezilla feh shotwell libreoffice lynx wireshark evince pidgin mumble
 
     #TrueCrypt
     sudo add-apt-repository ppa:michael-astrapi/ppa
     sudo apt-get update && sudo apt-get install truecrypt
+
+    #Skype
+
 
     echo 'Done.'
     main
@@ -973,6 +978,47 @@ case $REPLY in
     clear && echo 'Not an option, try again.' && cleanup;;
 esac
 }
+
+# INSTALL MISCELLANEOUS STUFF
+function miscellany {
+echo ''
+echo 'Installing miscellany...'
+echo ''
+echo 'Current package list:
+todo
+homesick
+dotfiles
+scripts
+fasd
+wallpapers'
+echo ''
+read -p 'Proceed? (Y)es, (N)o : ' REPLY
+case $REPLY in
+# Positive action
+[Yy]* ) 
+    echo 'Requires root privileges:'
+    #homesick
+    sudo gem install homesick
+    git clone git@bitbucket.org:jason-wang/dotfiles.git
+    mv dotfiles ~/.homesick/repos/
+    homesick symlink dotfiles
+
+    #fasd
+    cd ~/Downloads && curl -L https://github.com/clvv/fasd/tarball/1.0.1 | tar xz && cd clvv* && sudo make install && cd .. && rm -rf clvv*
+
+    echo 'Done.'
+    main
+    ;;
+# Negative action
+[Nn]* ) 
+    clear && main;;
+# Error
+* )
+    clear && echo 'Sorry, try again.' && miscellany
+    ;;
+esac
+}
+
 
 # Quit
 function quit {
