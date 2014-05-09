@@ -53,6 +53,7 @@ evince
 feh
 ffmpeg
 filezilla
+gnome-do
 gnome-tweak-tool
 gpick
 grsync
@@ -71,6 +72,7 @@ shotwell
 skype
 sparkleshare
 texmaker
+tightvncserver
 truecrypt
 xchat
 vlc
@@ -83,11 +85,15 @@ case $REPLY in
 [Yy]* ) 
     echo 'Requires root privileges:'
     # Feel free to change to whatever suits your preferences.
-    sudo apt-get install -y --no-install-recommends cheese darktable easytag gnome-tweak-tool gpick grsync nautilus-dropbox nautilus-open-terminal pyrenamer sparkleshare xchat vlc ncmpcpp mutt canto redshift weechat irssi pianobar filezilla feh shotwell libreoffice lynx wireshark evince pidgin mumble audacity ffmpeg texmaker
+    sudo apt-get install -y --no-install-recommends cheese darktable easytag gnome-tweak-tool gpick grsync nautilus-dropbox nautilus-open-terminal pyrenamer sparkleshare xchat vlc ncmpcpp mutt canto redshift weechat irssi pianobar filezilla feh shotwell libreoffice lynx wireshark evince pidgin mumble audacity texmaker gnome-do tightvncserver
 
     #TrueCrypt
     sudo add-apt-repository ppa:michael-astrapi/ppa
     sudo apt-get update && sudo apt-get install truecrypt
+
+    #ffmpeg
+    sudo add-apt-repository ppa:jon-severinsson/ffmpeg
+    sudo apt-get update && sudo apt-get install ffmpeg
 
     #Skype
     echo "deb http://archive.canonical.com/ubuntu trusty partner\ndeb-src http://archive.canonical.com/ubuntu trusty partner\n" | sudo tee -a /etc/apt/sources.list && sudo apt-get update
@@ -330,10 +336,10 @@ case $REPLY in
     fi
     # Settings font settings
     gsettings set org.gnome.desktop.interface text-scaling-factor '1.0'
-    gsettings set org.gnome.desktop.interface document-font-name 'Cantarell 10'
-    gsettings set org.gnome.desktop.interface font-name 'Cantarell 10'
-    gsettings set org.gnome.nautilus.desktop font 'Cantarell 10'
-    gsettings set org.gnome.desktop.wm.preferences titlebar-font 'Cantarell Bold 10'
+    gsettings set org.gnome.desktop.interface document-font-name 'Cantarell 12'
+    gsettings set org.gnome.desktop.interface font-name 'Cantarell 12'
+    gsettings set org.gnome.nautilus.desktop font 'Cantarell 12'
+    gsettings set org.gnome.desktop.wm.preferences titlebar-font 'Cantarell Bold 12'
     gsettings set org.gnome.settings-daemon.plugins.xsettings antialiasing 'rgba'
     gsettings set org.gnome.settings-daemon.plugins.xsettings hinting 'slight'
     echo 'Done. '
@@ -405,11 +411,13 @@ case $REPLY in
     heroku
     maven
     mongodb
+    mysql-server
     nginx
     nodejs
     npm
     perl
     php5
+    postgresql
     python-launchpadlib
     python3-pip
     python3-distutils-extra
@@ -423,7 +431,7 @@ case $REPLY in
     [Yy]* ) 
         echo 'Requires root privileges:'
         # Feel free to change to whatever suits your preferences.
-        sudo apt-get install -y bzr devscripts gcc-snapshot git glade gnome-common gtk-3-examples lib32stdc++6 nodejs python-launchpadlib python3-distutils-extra npm ant maven mongodb perl emacs gdb g++ ruby python-pip nginx apache2 vim php5
+        sudo apt-get install -y bzr devscripts gcc-snapshot git glade gnome-common gtk-3-examples lib32stdc++6 nodejs python-launchpadlib python3-distutils-extra npm ant maven mongodb perl emacs gdb g++ ruby python-pip nginx apache2 vim php5 mysql-server postgresql
 
         #yeoman
         sudo npm install -g yo
@@ -527,6 +535,7 @@ fontforge
 fontforge-extras
 gimp
 gimp-plugin-registry
+gnuplot
 icontool
 imagemagick
 inkscape'
@@ -537,7 +546,7 @@ case $REPLY in
 [Yy]* ) 
     echo 'Requires root privileges:'
     # Feel free to change to whatever suits your preferences.
-    sudo apt-get install -y fontforge fontforge-extras gimp gimp-plugin-registry icontool imagemagick inkscape
+    sudo apt-get install -y fontforge fontforge-extras gimp gimp-plugin-registry icontool imagemagick inkscape gnuplot
     echo 'Done.'
     main
     ;;
