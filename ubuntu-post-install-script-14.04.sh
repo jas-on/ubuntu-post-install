@@ -44,12 +44,14 @@ echo ''
 echo 'Installing selected applications...'
 echo ''
 echo 'Current package list:
+audacity
 canto
 cheese
 darktable
 easytag
 evince
 feh
+ffmpeg
 filezilla
 gnome-tweak-tool
 gpick
@@ -68,6 +70,7 @@ redshift
 shotwell
 skype
 sparkleshare
+texmaker
 truecrypt
 xchat
 vlc
@@ -80,14 +83,16 @@ case $REPLY in
 [Yy]* ) 
     echo 'Requires root privileges:'
     # Feel free to change to whatever suits your preferences.
-    sudo apt-get install -y --no-install-recommends cheese darktable easytag gnome-tweak-tool gpick grsync nautilus-dropbox nautilus-open-terminal pyrenamer sparkleshare xchat vlc ncmpcpp mutt canto redshift weechat irssi pianobar filezilla feh shotwell libreoffice lynx wireshark evince pidgin mumble
+    sudo apt-get install -y --no-install-recommends cheese darktable easytag gnome-tweak-tool gpick grsync nautilus-dropbox nautilus-open-terminal pyrenamer sparkleshare xchat vlc ncmpcpp mutt canto redshift weechat irssi pianobar filezilla feh shotwell libreoffice lynx wireshark evince pidgin mumble audacity ffmpeg texmaker
 
     #TrueCrypt
     sudo add-apt-repository ppa:michael-astrapi/ppa
     sudo apt-get update && sudo apt-get install truecrypt
 
     #Skype
-
+    echo "deb http://archive.canonical.com/ubuntu trusty partner\ndeb-src http://archive.canonical.com/ubuntu trusty partner\n" | sudo tee -a /etc/apt/sources.list && sudo apt-get update
+    sudo apt-get install libqt4-dbus:i386 libqt4-network:i386 libqt4-xml:i386 libqtcore4:i386 libqtgui4:i386 libqtwebkit4:i386 sni-qt:i386
+    sudo apt-get install skype
 
     echo 'Done.'
     main
@@ -119,6 +124,7 @@ case $REPLY in
     echo ''
     echo 'Current package list:
     aptitude
+    awk
     curl
     dconf-tools
     dos2unix
@@ -126,10 +132,12 @@ case $REPLY in
     feh
     fontconfig
     gnupg
+    gparted
     htop
     lftp
     mpd
     mtr
+    nmap
     openjdk-7-jdk
     openssh-server
     p7zip-full
@@ -160,7 +168,7 @@ case $REPLY in
     [Yy]* )
         echo 'Requires root privileges:'
         # Feel free to change to whatever suits your preferences.
-        sudo apt-get install -y --no-install-recommends aptitude dconf-tools openjdk-7-jdk openssh-server p7zip-full ppa-purge python-soappy samba ssh supybot symlinks synaptic virt-manager zsync sed fontconfig feh proxychains wine screen tmux lftp zsh sshfs fail2ban wget curl mpd dos2unix rxvt-unicode-256color gnupg htop mtr tcpdump
+        sudo apt-get install -y --no-install-recommends aptitude dconf-tools openjdk-7-jdk openssh-server p7zip-full ppa-purge python-soappy samba ssh supybot symlinks synaptic virt-manager zsync sed fontconfig feh proxychains wine screen tmux lftp zsh sshfs fail2ban wget curl mpd dos2unix rxvt-unicode-256color gnupg htop mtr tcpdump awk nmap gparted
         echo 'Done.'
         clear && system
         ;;
@@ -386,7 +394,7 @@ case $REPLY in
     ant
     apache2
     bzr
-    devscripts 
+    devscripts
     emacs
     g++
     gdb
@@ -403,7 +411,7 @@ case $REPLY in
     perl
     php5
     python-launchpadlib
-    python-pip
+    python3-pip
     python3-distutils-extra
     ruby
     vim
@@ -417,6 +425,7 @@ case $REPLY in
         # Feel free to change to whatever suits your preferences.
         sudo apt-get install -y bzr devscripts gcc-snapshot git glade gnome-common gtk-3-examples lib32stdc++6 nodejs python-launchpadlib python3-distutils-extra npm ant maven mongodb perl emacs gdb g++ ruby python-pip nginx apache2 vim php5
 
+        #yeoman
         sudo npm install -g yo
 
         #Heroku
@@ -883,6 +892,8 @@ case $REPLY in
     gsettings set org.gnome.desktop.wm.preferences titlebar-font 'Ubuntu Bold 9'
     gsettings set org.gnome.settings-daemon.plugins.xsettings antialiasing 'rgba'
     gsettings set org.gnome.settings-daemon.plugins.xsettings hinting 'slight'
+    gsettings set org.gnome.desktop.default-applications.terminal exec 'urxvt'
+    gsettings set org.gnome.desktop.default-applications.terminal exec-arg '-x'
     # Unity Settings
     echo 'Setting Unity preferences...'
     gsettings set com.canonical.Unity.ApplicationsLens display-available-apps false
@@ -990,6 +1001,7 @@ homesick
 dotfiles
 scripts
 fasd
+fonts
 wallpapers'
 echo ''
 read -p 'Proceed? (Y)es, (N)o : ' REPLY
@@ -998,13 +1010,18 @@ case $REPLY in
 [Yy]* ) 
     echo 'Requires root privileges:'
     #homesick
-    sudo gem install homesick
-    git clone git@bitbucket.org:jason-wang/dotfiles.git
-    mv dotfiles ~/.homesick/repos/
+    sudo gem install homesick &&
+    git clone git@bitbucket.org:jason-wang/dotfiles.git &&
+    mv dotfiles ~/.homesick/repos/ &&
     homesick symlink dotfiles
 
     #fasd
-    cd ~/Downloads && curl -L https://github.com/clvv/fasd/tarball/1.0.1 | tar xz && cd clvv* && sudo make install && cd .. && rm -rf clvv*
+    cd ~/Downloads &&
+    curl -L https://github.com/clvv/fasd/tarball/1.0.1 | tar xz &&
+    cd clvv* && sudo make install && cd .. && rm -rf clvv*
+
+    #fonts
+    sudo apt-get install -y fonts-inconsolata
 
     echo 'Done.'
     main
