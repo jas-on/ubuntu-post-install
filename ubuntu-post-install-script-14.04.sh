@@ -1,25 +1,5 @@
 #!/bin/bash
 # -*- Mode: sh; coding: utf-8; indent-tabs-mode: nil; tab-width: 4 -*-
-#
-# Authors:
-#   Sam Hewitt <hewittsamuel@gmail.com>
-#
-# Description:
-#   A post-installation bash script for Ubuntu (14.04)
-#
-# Legal Stuff:
-#
-# This script is free software; you can redistribute it and/or modify it under
-# the terms of the GNU General Public License as published by the Free Software
-# Foundation; version 3.
-#
-# This script is distributed in the hope that it will be useful, but WITHOUT
-# ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-# FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
-# details.
-#
-# You should have received a copy of the GNU General Public License along with
-# this program; if not, see <https://www.gnu.org/licenses/gpl-3.0.txt>
 
 echo ''
 echo '#-------------------------------------------#'
@@ -59,24 +39,38 @@ esac
 }
 
 # INSTALL APPLICATIONS
-function favourites {
-# Install Favourite Applications
+function favorites {
 echo ''
-echo 'Installing selected favourite applications...'
+echo 'Installing selected applications...'
 echo ''
 echo 'Current package list:
+canto
 cheese
 darktable
 easytag
+evince
+feh
+filezilla
 gnome-tweak-tool
 gpick
 grsync
+irssi
+libreoffice
+lynx
+mutt
 nautilus-dropbox
 nautilus-open-terminal
+ncmpcpp
+pianobar
 pyrenamer
+redshift
+shotwell
 sparkleshare
+truecrypt
 xchat
-vlc'
+vlc
+weechat
+wireshark'
 echo ''
 read -p 'Proceed? (Y)es, (N)o : ' REPLY
 case $REPLY in
@@ -84,7 +78,12 @@ case $REPLY in
 [Yy]* ) 
     echo 'Requires root privileges:'
     # Feel free to change to whatever suits your preferences.
-    sudo apt-get install -y --no-install-recommends cheese darktable easytag gnome-tweak-tool gpick grsync nautilus-dropbox nautilus-open-terminal pyrenamer sparkleshare xchat vlc
+    sudo apt-get install -y --no-install-recommends cheese darktable easytag gnome-tweak-tool gpick grsync nautilus-dropbox nautilus-open-terminal pyrenamer sparkleshare xchat vlc ncmpcpp mutt canto redshift weechat irssi pianobar filezilla feh shotwell libreoffice lynx wireshark evince
+
+    #TrueCrypt
+    sudo add-apt-repository ppa:michael-astrapi/ppa
+    sudo apt-get update && sudo apt-get install truecrypt
+
     echo 'Done.'
     main
     ;;
@@ -95,7 +94,7 @@ case $REPLY in
 # Error
 * )
     clear && echo 'Sorry, try again.'
-    favourites
+    favorites
     ;;
 esac
 }
@@ -103,30 +102,51 @@ esac
 # INSTALL SYSTEM TOOLS
 function system {
 echo ''
-echo '1. Install favourite system utilities?'
+echo '1. Install favorite system utilities?'
 echo '2. Install fingerprint reader software?'
 echo 'r. Return.'
 echo ''
 read -p 'What would you like to do? (Enter your choice) : ' REPLY
 case $REPLY in
-# Install Favourite System utilities
+# Install Favorite System utilities
 1)
-    echo 'Installing favourite system utilities...'
+    echo 'Installing favorite system utilities...'
     echo ''
     echo 'Current package list:
     aptitude
+    curl
     dconf-tools
+    dos2unix
+    fail2ban
+    feh
+    fontconfig
+    gnupg
+    htop
+    lftp
+    mpd
+    mtr
     openjdk-7-jdk
     openssh-server
     p7zip-full
     ppa-purge
+    proxychains
     python-soappy
+    rsync
+    rxvt-unicode-256color
     samba
+    screen
+    sed
     ssh
+    sshfs
     supybot
     symlinks
     synaptic
+    tmux
+    tcpdump
     virt-manager
+    wget
+    wine
+    zsh
     zsync'
     echo ''
     read -p 'Proceed? (Y)es, (N)o : ' REPLY
@@ -135,7 +155,7 @@ case $REPLY in
     [Yy]* )
         echo 'Requires root privileges:'
         # Feel free to change to whatever suits your preferences.
-        sudo apt-get install -y --no-install-recommends aptitude dconf-tools openjdk-7-jdk openssh-server p7zip-full ppa-purge python-soappy samba ssh supybot symlinks synaptic virt-manager zsync
+        sudo apt-get install -y --no-install-recommends aptitude dconf-tools openjdk-7-jdk openssh-server p7zip-full ppa-purge python-soappy samba ssh supybot symlinks synaptic virt-manager zsync sed fontconfig feh proxychains wine screen tmux lftp zsh sshfs fail2ban wget curl mpd dos2unix rxvt-unicode-256color gnupg htop mtr tcpdump
         echo 'Done.'
         clear && system
         ;;
@@ -347,8 +367,8 @@ esac
 function development {
 echo ''
 echo '1. Install development tools?'
-echo '2. Install Ubuntu SDK?'
-echo '3. Install Ubuntu Phablet Tools?'
+echo '2. Install development libraries?'
+echo '3. Install IDEs?'
 echo 'r. Return'
 echo ''
 read -p 'What would you like to do? (Enter your choice) : ' REPLY
@@ -358,15 +378,31 @@ case $REPLY in
     echo 'Installing development tools...'
     echo ''
     echo 'Current package list:
+    ant
+    apache2
     bzr
     devscripts 
+    emacs
+    g++
+    gdb
     git
     glade
     gnome-common
     gtk-3-examples
+    heroku
+    maven
+    mongodb
+    nginx
     nodejs
+    npm
+    perl
+    php5
     python-launchpadlib
-    python3-distutils-extra'
+    python-pip
+    python3-distutils-extra
+    ruby
+    vim
+    yeoman'
     echo ''
     read -p 'Proceed? (Y)es, (N)o : ' REPLY
     case $REPLY in
@@ -374,7 +410,12 @@ case $REPLY in
     [Yy]* ) 
         echo 'Requires root privileges:'
         # Feel free to change to whatever suits your preferences.
-        sudo apt-get install -y bzr devscripts gcc-snapshot git glade gnome-common gtk-3-examples lib32stdc++6 nodejs python-launchpadlib python3-distutils-extra
+        sudo apt-get install -y bzr devscripts gcc-snapshot git glade gnome-common gtk-3-examples lib32stdc++6 nodejs python-launchpadlib python3-distutils-extra npm ant maven mongodb perl emacs gdb g++ ruby python-pip nginx apache2 vim php5
+
+        sudo npm install -g yo
+
+        #Heroku
+        wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sh
         echo 'Done.'
         development
         ;;
@@ -389,27 +430,69 @@ case $REPLY in
         ;;
     esac
     ;;
-# Install Ubuntu SDK
+#Install development libraries
 2)
-    # Add repository
-    echo 'Adding Ubuntu SDK Team PPA to software sources...'
-    echo 'Requires root privileges:'
-    sudo add-apt-repository -y ppa:ubuntu-sdk-team/ppa
-    # Update repository information
-    echo 'Updating repository information...'
-    sudo apt-get update
-    # Install package(s)
-    echo 'Installing Ubuntu SDK...'
-    sudo apt-get install -y ubuntu-sdk
-    echo 'Done.'
-    development
+    echo 'Installing development libraries'
+    echo ''
+    echo 'Current package list:
+    mono-devel
+    libboost-devel
+    ncurses-base'
+    echo ''
+    read -p 'Proceed? (Y)es, (N)o : ' REPLY
+    case $REPLY in
+    # Positive action
+    [Yy]* ) 
+        echo 'Requires root privileges:'
+        # Feel free to change to whatever suits your preferences.
+        sudo apt-get install -y libboost-devel ncurses-base mono-devel
+
+        echo 'Done.'
+        development
+        ;;
+    # Negative action
+    [Nn]* )
+        clear && development
+        ;;
+    # Error
+    * )
+        clear && echo 'Sorry, try again.'
+        development
+        ;;
+    esac
     ;;
-# Install Ubuntu Phablet Tools
+#Install IDEs
 3)
-    echo 'Installing Phablet Tools...'
-    sudo apt-get install -y phablet-tools
-    echo 'Done.'
-    development
+    echo 'Installing IDEs'
+    echo ''
+    echo 'Current package list:
+    eclipse
+    monodevelop
+    phpstorm
+    pycharm
+    intelli-j'
+    echo ''
+    read -p 'Proceed? (Y)es, (N)o : ' REPLY
+    case $REPLY in
+    # Positive action
+    [Yy]* ) 
+        echo 'Requires root privileges:'
+        # Feel free to change to whatever suits your preferences.
+        sudo apt-get install -y eclipse monodevelop
+
+        echo 'Done.'
+        development
+        ;;
+    # Negative action
+    [Nn]* )
+        clear && development
+        ;;
+    # Error
+    * )
+        clear && echo 'Sorry, try again.'
+        development
+        ;;
+    esac
     ;;
 # Return
 [Rr]*) 
@@ -472,6 +555,7 @@ case $REPLY in
     # Add repository
     echo 'Adding Moka Icon Theme repository to sources...'
     echo 'Requires root privileges:'
+    sudo add-apt-repository ppa:moka/stable
     sudo add-apt-repository -y ppa:moka/moka-icon-theme
     # Update repository information
     echo 'Updating repository information...'
@@ -501,6 +585,7 @@ case $REPLY in
     # Add repository
     echo 'Adding Faba Icon Theme repository to sources...'
     echo 'Requires root privileges:'
+    sudo add-apt-repository ppa:moka/stable
     sudo add-apt-repository -y ppa:moka/faba-icon-theme
     # Update repository information
     echo 'Updating repository information...'
@@ -518,6 +603,7 @@ case $REPLY in
     # Add repository
     echo 'Adding Moka GTK Theme repository to sources...'
     echo 'Requires root privileges:'
+    sudo add-apt-repository ppa:moka/stable
     sudo add-apt-repository -y ppa:moka/moka-gtk-theme
     # Update repository information
     echo 'Updating repository information...'
@@ -550,6 +636,7 @@ case $REPLY in
     # Add repository
     echo 'Adding Moka GNOME Shell Theme repository to sources...'
     echo 'Requires root privileges:'
+    sudo add-apt-repository ppa:moka/stable
     sudo add-apt-repository -y ppa:moka/moka-gnome-shell-theme
     # Update repository information
     echo 'Updating repository information...'
@@ -567,6 +654,7 @@ case $REPLY in
     # Add repository
     echo 'Adding Orchis GTK Theme repository to sources...'
     echo 'Requires root privileges:'
+    sudo add-apt-repository ppa:moka/stable
     sudo add-apt-repository -y ppa:moka/orchis-gtk-theme
     # Update repository information
     echo 'Updating repository information...'
@@ -900,8 +988,8 @@ esac
 function main {
 echo ''
 echo '1. Perform system update & upgrade?'
-echo '2. Install favourite applications?'
-echo '3. Install favourite system utilities?'
+echo '2. Install favorite applications?'
+echo '3. Install favorite system utilities?'
 echo '4. Install development tools?'
 echo '5. Install design tools?'
 echo '6. Install extra GNOME components?'
@@ -909,13 +997,14 @@ echo '7. Install Ubuntu Restricted Extras?'
 echo '8. Install third-party applications?'
 echo '9. Customize system?'
 echo '10. Cleanup the system?'
+echo '11. Miscellany?'
 echo 'q. Quit?'
 echo ''
 read -p 'What would you like to do? (Enter your choice) : ' REPLY
 case $REPLY in
     1) sysupgrade;; # System Upgrade
-    2) clear && favourites;; # Install Favourite Applications
-    3) clear && system;; # Install Favourite Tools
+    2) clear && favorites ;; # Install Favorite Applications
+    3) clear && system;; # Install Favorite Tools
     4) clear && development;; # Install Dev Tools
     5) clear && design;; # Install Design Tools
     6) clear && gnome;; # Install GNOME components
@@ -923,6 +1012,7 @@ case $REPLY in
     8) clear && thirdparty;; # Install Third-Party Applications
     9) clear && customize;; # Customize system
     10) clear && cleanup;; # Cleanup System
+    11) clear && miscellany;; # Miscellaneous apps
     [Qq]* ) echo '' && quit;; # Quit
     * ) clear && echo 'Not an option, try again.' && main;;
 esac
