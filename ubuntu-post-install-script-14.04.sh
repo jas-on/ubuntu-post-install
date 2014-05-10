@@ -399,7 +399,6 @@ case $REPLY in
     echo 'Current package list:
     ant
     apache2
-    bzr
     devscripts
     emacs
     g++
@@ -412,6 +411,7 @@ case $REPLY in
     maven
     mongodb
     mysql-server
+    mysql-workbench
     nginx
     nodejs
     npm
@@ -431,13 +431,18 @@ case $REPLY in
     [Yy]* ) 
         echo 'Requires root privileges:'
         # Feel free to change to whatever suits your preferences.
-        sudo apt-get install -y bzr devscripts gcc-snapshot git glade gnome-common gtk-3-examples lib32stdc++6 nodejs python-launchpadlib python3-distutils-extra npm ant maven mongodb perl emacs gdb g++ ruby python-pip nginx apache2 vim php5 mysql-server postgresql
+        sudo apt-get install -y devscripts gcc-snapshot git glade gnome-common gtk-3-examples lib32stdc++6 nodejs python-launchpadlib python3-distutils-extra npm ant maven mongodb perl emacs gdb g++ ruby python-pip nginx apache2 vim php5 mysql-server postgresql mysql-workbench
 
+        echo 'Getting yeoman...'
         #yeoman
         sudo npm install -g yo
+        echo 'Done with yeoman.'
 
+        echo 'Getting heroku...'
         #Heroku
         wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sh
+        echo 'Done with heroku.'
+
         echo 'Done.'
         development
         ;;
@@ -719,12 +724,14 @@ function customize {
 echo ''
 echo '1. Configure system?'
 echo '2. Install Third-Party themes?'
+echo '3. Widget?'
 echo 'r. Return'
 echo ''
 read -p 'What would you like to do? (Enter your choice) : ' REPLY
 case $REPLY in
     1) clear && config;; # System Configuration
     2) clear && themes;; # Install Third-Party Themes
+    3) clear && widgets;; # Install widgets
     [Rr]*) clear && main;; # Return
     * ) clear && echo 'Not an option, try again.' && customize;; # Invalid choice
 esac
@@ -880,6 +887,19 @@ case $REPLY in
 esac
 }
 
+#WIDGETS
+function widgets {
+echo ''
+echo 'Current pacakge list:
+conky
+docky'
+
+sudo apt-get install -y docky conky-all
+
+    echo 'Done.'
+    clear && customize
+}
+
 # CONFIG
 function config {
 echo ''
@@ -1005,12 +1025,16 @@ echo ''
 echo 'Installing miscellany...'
 echo ''
 echo 'Current package list:
-todo
-homesick
+cmatrix
+cowsay
 dotfiles
-scripts
 fasd
 fonts
+fortune
+homesick
+scripts
+todo
+tty-clock
 wallpapers'
 echo ''
 read -p 'Proceed? (Y)es, (N)o : ' REPLY
@@ -1018,6 +1042,9 @@ case $REPLY in
 # Positive action
 [Yy]* ) 
     echo 'Requires root privileges:'
+
+    sudo apt-get install tty-clock fortune cowsay cmatrix
+
     #homesick
     sudo gem install homesick &&
     git clone git@bitbucket.org:jason-wang/dotfiles.git &&
